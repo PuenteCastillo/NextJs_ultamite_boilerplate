@@ -6,12 +6,10 @@ export default function ServiceNavBar() {
       {/* RESAURANT NAVBAR */}
       <nav className="flex text-reg border-b pb-2">
         <Link href="/serviceprovider/landscaping" className="mr-7">
-          {" "}
-          Overview{" "}
+          Overview
         </Link>
         <Link href="/serviceprovider/landscaping/services" className="mr-7">
-          {" "}
-          Menu{" "}
+          Menu
         </Link>
       </nav>
       {/* RESAURANT NAVBAR */}
