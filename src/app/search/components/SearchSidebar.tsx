@@ -1,21 +1,42 @@
-export default function SearchSidebar() {
+import Link from "next/link";
+import { Location, Cuisine } from "@prisma/client";
+
+export default async function SearchSidebar({
+  locations,
+  cuisines,
+}: {
+  locations: Location[];
+  cuisines: Cuisine[];
+}) {
+  console.log(locations);
+  console.log(cuisines);
   return (
     <div className="w-1/5">
-      <h1> hello world </h1>
       <div className="border-b pb-4">
         <h1 className="mb-2">Region</h1>
-        <p className="font-light text-reg">Toronto</p>
-        <p className="font-light text-reg">Ottawa</p>
-        <p className="font-light text-reg">Montreal</p>
-        <p className="font-light text-reg">Hamilton</p>
-        <p className="font-light text-reg">Kingston</p>
-        <p className="font-light text-reg">Niagara</p>
+        {locations.map((location) => (
+          <div key={location.id}>
+            <Link
+              href={`/search?city=${location.name}`}
+              className="font-light text-reg"
+            >
+              {location.name}
+            </Link>
+          </div>
+        ))}
       </div>
       <div className="border-b pb-4 mt-3">
         <h1 className="mb-2">Cuisine</h1>
-        <p className="font-light text-reg">Mexican</p>
-        <p className="font-light text-reg">Italian</p>
-        <p className="font-light text-reg">Chinese</p>
+        {cuisines.map((cuisine) => (
+          <div key={cuisine.id}>
+            <Link
+              href={`/search?cuisine=${cuisine.name}`}
+              className="font-light text-reg"
+            >
+              {cuisine.name}
+            </Link>
+          </div>
+        ))}
       </div>
       <div className="mt-3 pb-4">
         <h1 className="mb-2">Price</h1>

@@ -5,16 +5,6 @@ import { PrismaClient } from "@prisma/client";
 
 //? data fetching ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-export interface ServiceCardProps {
-  id: number;
-  name: string;
-  main_image: string;
-  cuisine: string;
-  location: string;
-  slug: string;
-  price: string;
-}
-
 const prisma = new PrismaClient();
 
 const fetchRestaurantsByLocation = (location: string | undefined) => {
@@ -43,6 +33,14 @@ const fetchRestaurantsByLocation = (location: string | undefined) => {
   });
 };
 
+const fetchAllLocations = async () => {
+  return await prisma.location.findMany();
+};
+
+const fetchAllCuisines = async () => {
+  return await prisma.cuisine.findMany();
+};
+
 //? data fetching End ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 export default async function Search({
@@ -51,14 +49,17 @@ export default async function Search({
   searchParams: { city: string };
 }) {
   const restaurants = await fetchRestaurantsByLocation(searchParams.city);
+  const locations = await fetchAllLocations();
+  const cuisines = await fetchAllCuisines();
 
   console.log(restaurants);
-  console.log(searchParams);
+  console.log(locations);
+  console.log(cuisines);
   return (
     <>
       <Header />
       <div className="flex py-4 m-auto w-2/3  justify-between items-start">
-        <SearchSidebar />
+        <SearchSidebar locations={locations} cuisines={cuisines} />
         <div className="w-5/6 ml-5">
           {restaurants.length ? (
             <>
